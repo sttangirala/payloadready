@@ -51,6 +51,7 @@ FILENAME_CONFLICT = "FILENAME_CONFLICT"
 DOB_CONFLICT = "DOB_CONFLICT"
 INTERNATIONAL_HOLD = "INTERNATIONAL_HOLD"
 NO_EXISTING_PERSON = "NO_EXISTING_PERSON"
+NO_DEFENSIBLE_CANDIDATE = "NO_DEFENSIBLE_CANDIDATE"
 DUAL_ENROLL_EXISTING = "DUAL_ENROLL_EXISTING"
 TEST_RECORD = "TEST_RECORD"
 DECEASED_RECORD = "DECEASED_RECORD"
@@ -74,3 +75,12 @@ WEIGHT_FILENAME = 0.40
 WEIGHT_NAME = 0.30
 WEIGHT_DOB = 0.30
 CONFLICT_PENALTY = 0.25
+
+# Applied instead of CONFLICT_PENALTY when a candidate was proposed by
+# independent name+DOB corroboration (not the filename) despite a
+# rejected/conflicting filename lead: the filename mechanism being wrong
+# (e.g. a reused scanner cover sheet) does not itself weaken the
+# candidate's own name/DOB evidence, so a present supporting SSN
+# last-4 match adds confidence rather than the standard conflict
+# penalty being subtracted.
+INDEPENDENT_LAST4_SUPPORT_BONUS = 0.20

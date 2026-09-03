@@ -173,6 +173,13 @@ def evaluate(
                 filename_conflict = True
                 if non_student:
                     reasons.append(policy.NOT_STUDENT_RECORD)
+                # Only surface DOB_CONFLICT here when the name otherwise
+                # matched: a DOB comparison is only meaningful evidence
+                # about *this* candidate once the name has tied the
+                # applicant to them. A name mismatch alone is already
+                # fully explained by FILENAME_CONFLICT below.
+                if name_ok and dob_conflict:
+                    reasons.append(policy.DOB_CONFLICT)
 
     if filename_conflict:
         reasons.append(policy.FILENAME_CONFLICT)
@@ -202,7 +209,15 @@ def evaluate(
         reasons.append(policy.LAST4_SUPPORT_ONLY)
 
     if candidate is None:
-        reasons.append(policy.NO_EXISTING_PERSON)
+        # A prior candidate that was actively rejected on DOB grounds
+        # (DOB_CONFLICT already recorded above) is a different situation
+        # from nobody-by-this-name-existing: there was a defensible lead,
+        # it just didn't hold up. Say so distinctly rather than implying
+        # no Banner person was ever found.
+        if policy.DOB_CONFLICT in reasons:
+            reasons.append(policy.NO_DEFENSIBLE_CANDIDATE)
+        else:
+            reasons.append(policy.NO_EXISTING_PERSON)
 
     # write_credits is always "no": the supplied extracts contain no
     # evaluated courses, equivalencies, accepted hours, or grades, so no
@@ -226,11 +241,20 @@ def evaluate(
         reasons.append(policy.INTERNATIONAL_HOLD)
 
     has_conflict = policy.DOB_CONFLICT in reasons or policy.FILENAME_CONFLICT in reasons
+    # A candidate proposed via independent name+DOB corroboration despite
+    # a rejected filename lead (not one accepted straight from the
+    # filename) is evaluated differently: the filename mechanism being
+    # wrong doesn't itself weaken that independent evidence.
+    filename_conflict_independent = (
+        policy.FILENAME_CONFLICT in reasons and not candidate_source_is_filename
+    )
     confidence = _score_confidence(
         filename_ok=candidate_source_is_filename and policy.FILENAME_ID in reasons,
         name_ok=policy.NAME_CORROBORATED in reasons,
         dob_ok=policy.DOB_CORROBORATED in reasons,
-        has_conflict=has_conflict,
+        dob_conflict=policy.DOB_CONFLICT in reasons,
+        filename_conflict_independent=filename_conflict_independent,
+        last4_support=policy.LAST4_SUPPORT_ONLY in reasons,
         candidate_present=candidate is not None,
     )
 
@@ -271,7 +295,15 @@ def _dedupe(items: List[str]) -> List[str]:
     return seen
 
 
-def _score_confidence(filename_ok, name_ok, dob_ok, has_conflict, candidate_present) -> float:
+def _score_confidence(
+    filename_ok,
+    name_ok,
+    dob_ok,
+    dob_conflict,
+    filename_conflict_independent,
+    last4_support,
+    candidate_present,
+) -> float:
     if not candidate_present:
         return 0.0
     score = 0.0
@@ -281,9 +313,20 @@ def _score_confidence(filename_ok, name_ok, dob_ok, has_conflict, candidate_pres
         score += policy.WEIGHT_NAME
     if dob_ok:
         score += policy.WEIGHT_DOB
-    if has_conflict:
-        score = max(0.0, score - policy.CONFLICT_PENALTY)
-    return round(min(score, 0.99), 2)
+    if dob_conflict:
+        # A DOB source actively disagreeing with this specific
+        # candidate is genuine conflicting identity evidence.
+        score -= policy.CONFLICT_PENALTY
+    if filename_conflict_independent and last4_support:
+        # The candidate didn't come from the (rejected) filename at
+        # all -- it was independently corroborated by name and DOB.
+        # A supporting (non-decisive) SSN last-4 match on top of that
+        # independent corroboration is additional support, not a
+        # reason to discount the identity evidence the way a directly
+        # conflicting DOB would be.
+        score += policy.INDEPENDENT_LAST4_SUPPORT_BONUS
+    score = max(0.0, min(score, 0.99))
+    return round(score, 2)
 
 
 def _blocked_note(reason: str) -> str:

@@ -165,10 +165,30 @@ heuristic score computed in `src/matcher.py::_score_confidence`:
   DOB source disagreement), applied after the above.
 - `0.00` whenever no candidate is proposed at all.
 
+There is one deliberate exception to the additive/subtractive rule
+above: when a candidate is proposed by **independent** name+DOB
+corroboration despite a rejected filename lead (i.e. the candidate did
+not come from the filename at all — see `APP-93015`), a supporting SSN
+last-4 match adds `+0.20` instead of the `-0.25` conflict penalty being
+applied. The reasoning: a wrong filename (e.g. a reused scanner cover
+sheet) is a problem with that piece of evidence, not with the
+candidate's own name/DOB match, which was established independently of
+it — so a corroborating (still never decisive) last-4 match reinforces
+that independent identity finding rather than being discounted for the
+filename's unrelated error. This is why `APP-93015` scores confidence
+`0.80` (strong independent identity evidence) while still landing in
+`HITL_REVIEW` (the filename discrepancy itself must be resolved by a
+human before any write). By contrast, when a DOB source actually
+disagrees with the *proposed* candidate's own DOB (`DOB_CONFLICT`,
+e.g. `APP-95001`), that is genuine conflicting evidence about that
+specific candidate and the standard `-0.25` penalty applies.
+
 Roughly: **≥0.85** — filename, name, and DOB all agree with no
-conflicts. **0.30–0.60** — a real candidate was found but with a
-conflict or via independent corroboration only (no filename support).
-**0.00** — no defensible candidate.
+conflicts. **0.30–0.60** — a real candidate was found but with a DOB
+conflict, or via independent corroboration only and without additional
+supporting evidence. **0.80** — a real candidate found via independent
+corroboration despite a rejected filename lead, reinforced by a
+supporting SSN last-4 match. **0.00** — no defensible candidate.
 
 ## Reason-code glossary
 
@@ -182,7 +202,8 @@ conflict or via independent corroboration only (no filename support).
 | `FILENAME_CONFLICT` | The filename's implied Banner ID does not hold up (wrong person, non-student record, or doesn't exist) and was rejected as the target. |
 | `DOB_CONFLICT` | A DOB source (application or OCR) materially disagrees with the candidate's Banner DOB. |
 | `INTERNATIONAL_HOLD` | Applicant is `app_type = International`; held per registrar instruction regardless of match strength. |
-| `NO_EXISTING_PERSON` | No defensible existing Banner person could be identified from the evidence. |
+| `NO_EXISTING_PERSON` | No filename lead and no independent name+DOB match exist at all — nobody by this identity was found in Banner (e.g. `APP-99001`). |
+| `NO_DEFENSIBLE_CANDIDATE` | A specific lead was found and evaluated (e.g. a filename candidate) but was rejected — e.g. its DOB materially conflicts (`DOB_CONFLICT`) — and no independent alternative exists either. Distinct from `NO_EXISTING_PERSON`: there *was* a lead, it just didn't hold up (e.g. `APP-92010`). |
 | `DUAL_ENROLL_EXISTING` | The candidate is an existing dual-enrollment Banner person; matched to avoid creating a duplicate person at matriculation. |
 | `TEST_RECORD` | The candidate is a test/dummy Banner record; blocked from any write. |
 | `DECEASED_RECORD` | The candidate Banner record is flagged deceased; blocked from any write, escalate to Admissions. |

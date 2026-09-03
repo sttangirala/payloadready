@@ -134,10 +134,50 @@ class TestEndToEndDecisions(unittest.TestCase):
         self.assertEqual(decision.bucket, "HITL_REVIEW")
         self.assertIn(policy.FILENAME_CONFLICT, decision.reasons)
 
+    def test_filename_conflict_with_independent_corroboration_scores_high_confidence(self):
+        # APP-93015: the filename points at the wrong person, but the
+        # proposed candidate (found independently) is strongly
+        # corroborated by application name, OCR name, DOB, and a
+        # supporting SSN last-4 match. The filename conflict is why this
+        # stays HITL_REVIEW, not a reason to score the identity evidence
+        # itself as weak.
+        decision = self.by_app["APP-93015"]
+        self.assertEqual(decision.banner_id, "A00050099")
+        self.assertEqual(decision.bucket, "HITL_REVIEW")
+        self.assertEqual(decision.write_credits, "no")
+        self.assertEqual(decision.confidence, 0.80)
+        self.assertIn(policy.NAME_CORROBORATED, decision.reasons)
+        self.assertIn(policy.DOB_CORROBORATED, decision.reasons)
+        self.assertIn(policy.LAST4_SUPPORT_ONLY, decision.reasons)
+
     def test_dob_conflict_produces_review(self):
         decision = self.by_app["APP-95001"]
         self.assertEqual(decision.bucket, "HITL_REVIEW")
         self.assertIn(policy.DOB_CONFLICT, decision.reasons)
+
+    def test_rejected_candidate_with_dob_conflict_is_no_defensible_candidate(self):
+        # APP-92010: the filename's named person (an employee) has a
+        # materially conflicting DOB and is not a student record. There
+        # was a lead, it just didn't hold up -- that's a different,
+        # more specific situation than "no such person was ever found"
+        # (APP-99001), so it gets its own reason code.
+        decision = self.by_app["APP-92010"]
+        self.assertEqual(decision.banner_id, "")
+        self.assertEqual(decision.bucket, "HITL_REVIEW")
+        self.assertEqual(decision.confidence, 0.00)
+        self.assertEqual(decision.write_credits, "no")
+        self.assertIn(policy.DOB_CONFLICT, decision.reasons)
+        self.assertIn(policy.NO_DEFENSIBLE_CANDIDATE, decision.reasons)
+        self.assertNotIn(policy.NO_EXISTING_PERSON, decision.reasons)
+
+    def test_genuinely_no_existing_person_keeps_that_reason(self):
+        # APP-99001: no filename candidate at all and no independent
+        # match -- this is the "nobody by this identity was found"
+        # case, and must not be confused with a rejected lead.
+        decision = self.by_app["APP-99001"]
+        self.assertEqual(decision.banner_id, "")
+        self.assertIn(policy.NO_EXISTING_PERSON, decision.reasons)
+        self.assertNotIn(policy.NO_DEFENSIBLE_CANDIDATE, decision.reasons)
 
     def test_shared_email_never_solely_drives_auto_match(self):
         # APP-90001 / APP-90002 share an email but land on two distinct
