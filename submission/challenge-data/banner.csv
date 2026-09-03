@@ -1,0 +1,13 @@
+banner_id,pidm,legal_first,legal_last,preferred_name,dob,email,ssn_last4,student_status,student_type,deceased,posted_transfer_credits
+A00012345,10001,Maria,Garcia-Lopez,Mari,1998-03-12,mgarcia@student.metrostate.edu,4421,AS,Degree,N,0
+A00030001,10002,David,Nguyen,David,2002-01-15,nguyenfamily@gmail.com,5567,AS,Degree,N,0
+A00030002,10003,Linh,Nguyen,Linh,2004-06-20,nguyenfamily@gmail.com,7788,AS,Degree,N,12
+A00000001,10999,Test,Student,Test,1900-01-01,test@metrostate.edu,0000,AS,Degree,N,0
+A00040001,10004,Wei,Zhang,Wei,1999-08-22,wzhang@student.metrostate.edu,,AS,Degree,N,0
+A00050001,10005,Connor,Blake,Connor,2001-02-02,cblake@student.metrostate.edu,6601,AS,Degree,N,3
+A00050099,10006,Ava,Morales,Ava,2003-11-19,amorales@student.metrostate.edu,6602,AS,Degree,N,0
+A00060001,10007,Taylor,Brooks,Taylor,2008-04-03,tbrooks@student.metrostate.edu,2211,AS,DualEnroll,N,0
+A00070001,10008,Michael,Brown,Mike,1988-12-01,mbrown@staff.metrostate.edu,1234,AS,Employee,N,0
+A00080001,10009,Sofia,Patel,Sofia,2000-09-30,spatel@student.metrostate.edu,9090,AS,Degree,N,24
+A00090001,10010,Robert,Smith,Bob,1978-05-01,rsmith@alumni.metrostate.edu,3344,IS,Degree,Y,0
+A00011111,10011,Jordan,Lee,Jordan,1997-07-07,jlee@student.metrostate.edu,8181,AS,Degree,N,0

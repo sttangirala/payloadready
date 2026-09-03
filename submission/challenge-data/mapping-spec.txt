@@ -1,0 +1,17 @@
+Metro State — Prism to Banner identity writeback (draft v0.6, unsigned)
+
+1. Match keys, in order: Banner ID in filename, then email, then SSN last4,
+   then legal name + DOB.
+2. SSN last4 is unique at this institution and is sufficient for an automated match.
+3. If filename starts with A00… that is the Banner ID to write.
+4. Preferred name may differ from legal name; treat as the same person when
+   other keys agree.
+5. Test / dummy students (name contains TEST, or Banner ID A00000001) must
+   never be written.
+6. Do not create a new Banner person. Write only to an existing SPRIDEN.
+7. If the Banner record is deceased, do not write. Escalate to Admissions.
+8. Dual-enrolled high school students may later matriculate; do not create
+   a second person.
+9. Transfer credit posts to SHAINST. Do not post if Banner already has
+   posted_transfer_credits > 0 for that PIDM.
+10. This spec is a draft. The registrar's written instruction wins a conflict.

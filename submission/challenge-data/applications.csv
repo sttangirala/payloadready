@@ -1,0 +1,13 @@
+app_id,first,last,dob,email,ssn_last4,term,app_type
+APP-88421,Mari,Garcia,03/12/1998,mari.g.lopez@gmail.com,4421,Fall 2026,Transfer
+APP-90001,D.,Nguyen,01/15/2002,nguyenfamily@gmail.com,5567,Fall 2026,Transfer
+APP-90002,Linh,Nguyen,06/20/2004,nguyenfamily@gmail.com,7788,Fall 2026,Continuing
+APP-91002,Zhang,Wei,22/08/1999,wei.zhang@qq.com,,Fall 2026,International
+APP-93015,Ava,Morales,11/19/2003,ava.m.2003@gmail.com,6602,Fall 2026,Transfer
+APP-94001,Taylor,Brooks,04/03/2008,tbrooks2008@gmail.com,2211,Fall 2026,DegreeSeeking
+APP-92010,Michael,Brown,12/01/2003,mikeb2003@gmail.com,1234,Fall 2026,DegreeSeeking
+APP-95001,Sofia,Patel,09/30/2000,sofia.patel@gmail.com,9090,Fall 2026,Transfer
+APP-96001,Robert,Smith,05/01/1978,robert.smith.1978@gmail.com,3344,Fall 2026,Transfer
+APP-97001,Test,Student,01/01/1900,test@metrostate.edu,0000,Fall 2026,Transfer
+APP-98001,Jordan,Lee,07/07/1997,jlee@student.metrostate.edu,8181,Fall 2026,Transfer
+APP-99001,Alex,Kim,02/14/2001,akim@qq.com,,Fall 2026,International

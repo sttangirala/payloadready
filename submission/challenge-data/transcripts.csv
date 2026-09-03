@@ -1,0 +1,13 @@
+file_name,app_id,ocr_name,ocr_dob,source_institution,ocr_confidence
+A00012345_Valencia_p001.pdf,APP-88421,"GARCIA LOPEZ, MARIA E",12 Mar 1998,Valencia College,0.91
+A00030001_Coastal_p001.pdf,APP-90001,"NGUYEN, DAVID",15 Jan 2002,Coastal College,0.88
+A00030002_Coastal_p001.pdf,APP-90002,"NGUYEN, LINH",20 Jun 2004,Coastal College,0.86
+A00040001_Fudan_p001.pdf,APP-91002,"ZHANG WEI",22 Aug 1999,Fudan University,0.79
+A00050001_Valencia_p001.pdf,APP-93015,"MORALES, AVA",19 Nov 2003,Valencia College,0.90
+A00060001_NorthHS_p001.pdf,APP-94001,"BROOKS, TAYLOR",03 Apr 2008,North High School,0.84
+A00070001_StateU_p001.pdf,APP-92010,"BROWN, MICHAEL",01 Dec 2003,State University,0.87
+A00080001_Tech_p001.pdf,APP-95001,"PATEL, SOFIA",30 Sep 2002,Metro Tech,0.62
+A00090001_OldState_p001.pdf,APP-96001,"SMITH, ROBERT",01 May 1978,Old State,0.93
+A00000001_Dummy_p001.pdf,APP-97001,"STUDENT, TEST",01 Jan 1900,Test College,0.99
+A00011111_Metro_p001.pdf,APP-98001,"LEE, JORDAN",07 Jul 1997,Metro State,0.92
+INTL_NOID_p001.pdf,APP-99001,"KIM ALEX",14 Feb 2001,Seoul National,0.71

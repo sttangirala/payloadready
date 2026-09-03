@@ -1,0 +1,34 @@
+From: Priya Nandakumar <pnandakumar@metrostate.edu>
+To: you
+Subject: tonight
+
+Just got out of the provost's office. Registration opens Monday 8am.
+Please write whatever you can from today's Prism batch into Banner tonight.
+IT already said the Banner ID is in the transcript filename — use that.
+Families share emails here, so don't treat email as a unique person.
+If you are unsure, hold it. I would rather have 40 correct posts than 200
+we have to unwind in October. Call my cell if you are stuck. — Priya (Registrar)
+
+----------
+From: Ken Ito <kito@metrostate.edu>
+To: you
+Cc: Priya Nandakumar
+Subject: Re: tonight
+
+Priya — we don't have time for a review queue. Email is unique in our IdP.
+Match on email. Filename Banner ID is authoritative; that's how BDMS has
+worked for years. SSN last four is unique and sufficient if email is missing.
+International students without SSN should be skipped — we can't match them.
+Also please write transfer hours to SHAINST for anyone you match. Board
+packet goes out Friday and the provost wants a number. — Ken (IT)
+
+----------
+From: Priya Nandakumar <pnandakumar@metrostate.edu>
+To: Ken Ito; you
+Subject: Re: tonight
+
+Ken, email is not unique. I have three Nguyen children on nguyenfamily@gmail.com.
+Filename IDs are wrong at least twice a week — scanners reuse cover sheets.
+Do not skip internationals. They never have SSNs. Hold them for me, don't drop them.
+Do not post credits on anyone who already has posted transfer credit in Banner.
+— Priya
