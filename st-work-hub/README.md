@@ -29,6 +29,19 @@ The first launch creates the database and loads clearly labelled **demo data**. 
 npm run dev
 ```
 
+### Work on it in the browser (GitHub Codespaces)
+
+1. On GitHub, open the repo → **Code → Codespaces → Create codespace** on this branch. The first setup takes a few minutes; it installs everything.
+2. In the Codespace terminal:
+   ```bash
+   cd st-work-hub
+   npm run dev:codespace
+   ```
+3. Open the **Ports** tab, then open port **6080** (“App window (desktop)”) in the browser. Click **Connect** and enter the password `vscode`. The ST Work Hub window appears there.
+4. Edit code in the Codespace editor. Interface changes refresh the window automatically; for changes under `src/main`, stop (Ctrl+C) and re-run the command.
+
+Codespace data is for development only. Your real data lives on your Mac.
+
 ### Build a double-clickable Mac app
 
 ```bash

@@ -1,0 +1,19 @@
+{
+  // Codespaces / Dev Containers setup for ST Work Hub.
+  // The desktop-lite feature runs a small Linux desktop you can view in a browser tab (port 6080),
+  // so the Electron window is visible while you edit code. Password for the desktop: vscode
+  "name": "ST Work Hub",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "runArgs": ["--shm-size=1g"],
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "6080": { "label": "App window (desktop)", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends libnss3 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libasound2 libxss1 libdrm2 libxkbcommon0 && cd st-work-hub && npm install",
+  "customizations": {
+    "codespaces": { "openFiles": ["st-work-hub/README.md"] }
+  }
+}
