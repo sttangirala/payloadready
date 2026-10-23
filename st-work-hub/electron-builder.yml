@@ -1,0 +1,22 @@
+appId: com.sobo.stworkhub
+productName: ST Work Hub
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**/*
+  - package.json
+  - '!dist/**/*.map'
+publish: null
+mac:
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+  # Unsigned by default. To sign, set CSC_LINK / CSC_KEY_PASSWORD (Developer ID cert) before `npm run dist:mac`.
+  identity: null
+  hardenedRuntime: false
+linux:
+  target: [dir]
